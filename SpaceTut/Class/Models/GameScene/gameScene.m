@@ -11,6 +11,7 @@
 #import "Enemy.h"
 #import "SpriteTut.h"
 #import "Shot.h"
+#import "RandonRote.h"
 
 @implementation gameScene
 
@@ -229,15 +230,16 @@
     
     SKSpriteNode *enemy = [[Enemy alloc]initWithAnimationAndPosition:self.aguaFrame ];
     
-    CGMutablePathRef cgpath = CGPathCreateMutable();
-        
+    
+     CGMutablePathRef cgpath = [RandonRote returnRote:[ self getRandomNumberBetween:1 to:5]];
+       /*
     CGPoint s = CGPointMake(600.0, 160);
     CGPoint e = CGPointMake(0.0, 320);
     CGPoint cp1 = CGPointMake(450, 320);
     CGPoint cp2 = CGPointMake(250, -320);
     CGPathMoveToPoint(cgpath,NULL, s.x, s.y);
     CGPathAddCurveToPoint(cgpath, NULL, cp1.x, cp1.y, cp2.x, cp2.y, e.x, e.y);
-    
+    */
     SKAction *planeDestroy = [SKAction followPath:cgpath asOffset:NO orientToPath:YES duration:5];
     [self addChild:enemy];
     
