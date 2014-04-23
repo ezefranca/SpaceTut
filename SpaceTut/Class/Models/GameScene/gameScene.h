@@ -11,6 +11,7 @@
 #import <SpriteKit/SpriteKit.h>
 #import "Define.h"
 #import "Timer.h"
+#import "Colision.h"
 
 @interface gameScene : SKScene <SKPhysicsContactDelegate>
 

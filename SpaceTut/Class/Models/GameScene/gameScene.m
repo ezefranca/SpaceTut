@@ -8,9 +8,13 @@
 
 #import "gameScene.h"
 #import "gameFloor.h"
+#import "Enemy.h"
 #import "SpriteTut.h"
+#import "Shot.h"
 
 @implementation gameScene
+
+@synthesize explosaoFrame;
 
 #pragma mark class init
 
@@ -38,12 +42,9 @@
         self.chao = [[gameFloor alloc]initWithSize:CGSizeMake(size.height , 1)];
         [self addChild:self.chao];
         
-        
-        
         self.aguaFrame = [self loadSpriteSheetFromImageWithName:@"jelly" withNumberOfSprites:12 withNumberOfRows:4 withNumberOfSpritesPerRow:3];
         self.explosaoFrame = [self loadSpriteSheetFromImageWithName:@"ex1" withNumberOfSprites:25 withNumberOfRows:5 withNumberOfSpritesPerRow:5];
         self.tirosFrame = [self alocandoSpriteTiro];
-        
         
         
         self.spriteTut = [[SpriteTut alloc]init];
@@ -55,9 +56,19 @@
         NSString *myParticlePath = [[NSBundle mainBundle] pathForResource:@"FireParticle" ofType:@"sks"];
         self.FireParticle = [NSKeyedUnarchiver unarchiveObjectWithFile:myParticlePath];
         self.FireParticle.particlePosition = CGPointMake(self.spriteTut.position.x - 30, self.spriteTut.position.y);
-        self.FireParticle.particleBirthRate = 250;
+        self.FireParticle.particleBirthRate = 100;
+        
+        
+        
+        NSString *myParticlePath2 = [[NSBundle mainBundle] pathForResource:@"SnowParticle" ofType:@"sks"];
+        SKEmitterNode*p = [NSKeyedUnarchiver unarchiveObjectWithFile:myParticlePath2];
+        p.particlePosition = CGPointMake(270, 160);
+        p.particleBirthRate = 10;
+        
+        
         
         [self addChild:self.FireParticle];
+         [self addChild:p];
         
        // SKAction *cu = [SKAction animateWithTextures:self.aguaFrame timePerFrame:0.2f];
         //[self.spriteTut runAction:[SKAction repeatActionForever:cu]];
@@ -72,7 +83,7 @@
         self.podeMoverBg1 = YES;
         self.podeMoverBg2 = NO;
         
-        [self EnemiesAndClouds];
+        [self gerateEnemy];
         
         NSLog(@"%f  %f", self.size.height , self.size.width);
         
@@ -117,91 +128,28 @@
 - (void)didBeginContact:(SKPhysicsContact *)contact
 {
     NSLog(@"contact detected");
-    
-    SKPhysicsBody *firstBody;
-    SKPhysicsBody *secondBody;
-    
-    if ([contact.bodyA.node.name isEqualToString:@"tiro" ]) {
-        
-        SKNode *node = contact.bodyA.node;
-        SKSpriteNode *enemy;
-        enemy = [[SKSpriteNode alloc]init];
-        enemy.size = CGSizeMake(50, 50);
-        enemy.name = @"explosao";
-        enemy.position = CGPointMake(node.position.x + 30, node.position.y );
-        SKAction *cu = [SKAction animateWithTextures:self.explosaoFrame timePerFrame:0.05f];
-        [self addChild:enemy];
-        
-        [enemy runAction:[SKAction repeatAction:cu count:1]];
-        
-        [contact.bodyA.node removeFromParent];
-    }
-    
-    if ([contact.bodyB.node.name isEqualToString:@"tiro" ]) {
-        
-        SKNode *node = contact.bodyB.node;
-        SKSpriteNode *enemy;
-        enemy = [[SKSpriteNode alloc]init];
-        enemy.size = CGSizeMake(50, 50);
-        enemy.position = CGPointMake(node.position.x + 30, node.position.y );
-        SKAction *cu = [SKAction animateWithTextures:self.explosaoFrame timePerFrame:1.0f];
-        [self addChild:enemy];
-        [enemy runAction:[SKAction repeatAction:cu count:1]];
-        [contact.bodyB.node removeFromParent];
-    }
-    
-    if (contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask)
-    {
-        firstBody = contact.bodyA;
-        secondBody = contact.bodyB;
-    }
-    else
-    {
-        firstBody = contact.bodyB;
-        secondBody = contact.bodyA;
-    }
-    
-    //Your f
+    [Colision check:contact.bodyA.node :contact.bodyB.node :self];
 }
 
 #pragma mark Main Game Loop
 
 -(void)update:(CFTimeInterval)currentTime {
     
-    /*
+    
     [self.emenySpawn stopTimer];
     if ((int)[self.emenySpawn timeElapsedInSeconds] == 1) {
         
-        [self EnemiesAndClouds];
+        [self gerateEnemy];
         [self.emenySpawn startTimer];
     }
-     */
+    
     [self enumerateChildNodesWithName:@"explosao" usingBlock:^(SKNode *node, BOOL *stop) {
         if (![node hasActions]) {
              [node removeFromParent];
         }
     }];
     
-    
-    if (self.pode) {
-        
-        [self atirar];
-        self.pode = NO;
-    }
-    
-    
-    if (self.podeDescer) {
-        self.spriteTut.position = CGPointMake(self.spriteTut.position.x, self.spriteTut.position.y - 4);
-        self.FireParticle.position =  CGPointMake(self.spriteTut.position.x - 160, self.spriteTut.position.y - 160);
-        
-    }
-    
-    if (self.podeSubir) {
-        self.spriteTut.position = CGPointMake(self.spriteTut.position.x, self.spriteTut.position.y + 4);
-        self.FireParticle.position =  CGPointMake(self.spriteTut.position.x - 160, self.spriteTut.position.y - 160);
-
-    }
-    
+    [self tutMoviments];
     [self verificaBackground];
     
     //To compute velocity we need delta time to multiply by points per second
@@ -230,24 +178,28 @@
 
 -(void)atirar
 {
-    SKSpriteNode *tiro = [[SKSpriteNode alloc]initWithColor:[UIColor yellowColor] size:CGSizeMake(40, 18)];
-    tiro.position = CGPointMake(self.spriteTut.position.x + 60, self.spriteTut.position.y);
-    tiro.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:tiro.size];
-    tiro.physicsBody.density = 0.1f;
-    tiro.physicsBody.categoryBitMask = tiroAzul;
-    tiro.physicsBody.contactTestBitMask = inimigo;
-    tiro.physicsBody.collisionBitMask = inimigo;
-    tiro.name = @"tiro";
-    
-    tiro.physicsBody.dynamic = YES;
-    SKAction *cu = [SKAction animateWithTextures:self.tirosFrame timePerFrame:0.2f];
-    [tiro runAction:[SKAction repeatActionForever:cu]];
-
+    SKSpriteNode *tiro = [[Shot alloc]initWithAnimationAndPosition:self.tirosFrame :CGPointMake(self.spriteTut.position.x + 60, self.spriteTut.position.y)  ];
     [self addChild:tiro];
     [tiro.physicsBody applyForce:CGVectorMake(25.0f, 0.0f)];
 }
 
-
+-(void)tutMoviments
+{
+    if (self.pode) {
+        [self atirar];
+        self.pode = NO;
+    }
+    
+    if (self.podeDescer) {
+        self.spriteTut.position = CGPointMake(self.spriteTut.position.x, self.spriteTut.position.y - 4);
+        self.FireParticle.position =  CGPointMake(self.spriteTut.position.x - 110, self.spriteTut.position.y - 160);
+    }
+    
+    if (self.podeSubir) {
+        self.spriteTut.position = CGPointMake(self.spriteTut.position.x, self.spriteTut.position.y + 4);
+        self.FireParticle.position =  CGPointMake(self.spriteTut.position.x - 110, self.spriteTut.position.y - 160);
+    }
+}
 
 -(void)verificaBackground
 {
@@ -269,59 +221,28 @@
         self.podeMoverBg2 = NO;
         self.bg2.position = CGPointMake(568*2.5, 160);
     }
-
 }
 
--(void)EnemiesAndClouds{
-    //not always come
-    SKSpriteNode *enemy;
-    enemy = [[SKSpriteNode alloc]init];
-    enemy.size = CGSizeMake(50, 50);
-    SKAction *cu = [SKAction animateWithTextures:self.aguaFrame timePerFrame:0.2f];
-    [enemy runAction:[SKAction repeatActionForever:cu]];
+#pragma mark gerando inimigos
 
-        enemy.scale = 0.6;
-        
-        enemy.position = CGPointMake(self.size.width/2, self.size.height/2);
-        enemy.zPosition = 1;
-    enemy.physicsBody.dynamic = YES;
-    enemy.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:enemy.size.width/2];
-    enemy.physicsBody.categoryBitMask = inimigo;
-    enemy.physicsBody.contactTestBitMask = tartaruga | borda | tiroAzul;
-    enemy.physicsBody.collisionBitMask = tartaruga | borda | tiroAzul;
+-(void)gerateEnemy{
     
+    SKSpriteNode *enemy = [[Enemy alloc]initWithAnimationAndPosition:self.aguaFrame ];
+    
+    CGMutablePathRef cgpath = CGPathCreateMutable();
         
-        //CGMutablePathRef cgpath = CGPathCreateMutable();
-        /*
-        //random values
-        float xStart = [self getRandomNumberBetween:0+enemy.size.width to:self.size.width-enemy.size.width ];
-        float xEnd = [self getRandomNumberBetween:0+enemy.size.width to:self.size.width-enemy.size.width ];
-        
-        //ControlPoint1
-        float cp1X = [self getRandomNumberBetween:0+enemy.size.width to:self.size.width-enemy.size.width ];
-        float cp1Y = [self getRandomNumberBetween:0+enemy.size.width to:self.size.width-enemy.size.height ];
-        
-        //ControlPoint2
-        float cp2X = [self getRandomNumberBetween:0+enemy.size.width to:self.size.width-enemy.size.width ];
-        float cp2Y = [self getRandomNumberBetween:0 to:cp1Y];
-        
-        CGPoint s = CGPointMake(600.0, 160);
-        CGPoint e = CGPointMake(0.0, 320);
-        CGPoint cp1 = CGPointMake(450, 320);
-        CGPoint cp2 = CGPointMake(250, -320);
-        CGPathMoveToPoint(cgpath,NULL, s.x, s.y);
-        CGPathAddCurveToPoint(cgpath, NULL, cp1.x, cp1.y, cp2.x, cp2.y, e.x, e.y);
+    CGPoint s = CGPointMake(600.0, 160);
+    CGPoint e = CGPointMake(0.0, 320);
+    CGPoint cp1 = CGPointMake(450, 320);
+    CGPoint cp2 = CGPointMake(250, -320);
+    CGPathMoveToPoint(cgpath,NULL, s.x, s.y);
+    CGPathAddCurveToPoint(cgpath, NULL, cp1.x, cp1.y, cp2.x, cp2.y, e.x, e.y);
     
     SKAction *planeDestroy = [SKAction followPath:cgpath asOffset:NO orientToPath:YES duration:5];
     [self addChild:enemy];
     
     SKAction *remove = [SKAction removeFromParent];
     [enemy runAction:[SKAction sequence:@[planeDestroy,remove]]];
-    
-    */
-    enemy.position = CGPointMake(450 , 160);
-     [self addChild:enemy];
-    
 }
 
 #pragma mark Randon Numbers
@@ -336,14 +257,12 @@
 -(NSArray *)alocandoSpriteTiro
 {
     NSArray *s = [NSArray arrayWithObjects:[SKTexture textureWithImageNamed:@"tiro3"],[SKTexture textureWithImageNamed:@"tiro2"],[SKTexture textureWithImageNamed:@"tiro1"], nil];
-
     return s;
 }
 
 -(NSMutableArray*)loadSpriteSheetFromImageWithName:(NSString*)name withNumberOfSprites:(int)numSprites withNumberOfRows:(int)numRows withNumberOfSpritesPerRow:(int)numSpritesPerRow {
     
     NSMutableArray* animationSheet = [NSMutableArray array];
-    
     SKTexture* mainTexture = [SKTexture textureWithImageNamed:name];
     
     for(int j = numRows-1; j >= 0; j--) {
