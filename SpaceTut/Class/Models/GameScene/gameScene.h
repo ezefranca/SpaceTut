@@ -11,11 +11,13 @@
 #import <SpriteKit/SpriteKit.h>
 #import "Define.h"
 #import "Timer.h"
+#import "Tut.h"
 #import "Colision.h"
+
 
 @interface gameScene : SKScene <SKPhysicsContactDelegate>
 
-@property SKSpriteNode *spriteTut;
+@property Tut *spriteTut;
 @property SKSpriteNode *chao;
 @property SKSpriteNode *bg1;
 @property SKSpriteNode *bg2;
@@ -28,6 +30,7 @@
 @property NSArray *aguaFrame;
 @property NSArray *tirosFrame;
 @property NSArray *explosaoFrame;
+@property NSArray *explosaoFrameVerde;
 @property BOOL podeSubir;
 @property BOOL podeDescer;
 @property SKEmitterNode *FireParticle;

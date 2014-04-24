@@ -10,14 +10,14 @@
 
 @implementation Explosion
 
--(id)initWithAnimationAndPosition : (NSArray *)frames : (CGPoint)position
+-(id)initWithAnimationAndPosition : (NSArray *)frames : (CGPoint)position : (CGSize )size
 {
     
     self = [super init];
     
     if (self) {
         
-        self.size = CGSizeMake(50, 50);
+        self.size = size;
         self.name = @"explosao";
         self.position = position;
         SKAction *cu = [SKAction animateWithTextures:frames timePerFrame:0.02f];

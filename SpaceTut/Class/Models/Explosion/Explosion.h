@@ -10,6 +10,7 @@
 
 @interface Explosion : SKSpriteNode
 
--(id)initWithAnimationAndPosition : (NSArray *)frames : (CGPoint)position;
+-(id)initWithAnimationAndPosition : (NSArray *)frames : (CGPoint)position : (CGSize )size;
 
+@property NSArray *frames;
 @end

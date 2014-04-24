@@ -9,9 +9,9 @@
 #import "gameScene.h"
 #import "gameFloor.h"
 #import "Enemy.h"
-#import "SpriteTut.h"
 #import "Shot.h"
 #import "RandonRote.h"
+#import "Player.h"
 
 @implementation gameScene
 
@@ -24,7 +24,7 @@
     if (self = [super initWithSize:size]) {
         /* Setup your scene here */
         self.bg2 = [SKSpriteNode spriteNodeWithImageNamed:@"newbg2"];
-        self.bg2.position = CGPointMake(568*2.5, size.width /2);
+        self.bg2.position = CGPointMake(568*2.5, 160);
         [self addChild:self.bg2];
         
         
@@ -34,7 +34,7 @@
         
         
         self.bg1 = [SKSpriteNode spriteNodeWithImageNamed:@"newbg1"];
-        self.bg1.position = CGPointMake(size.height /2, size.width /2);
+        self.bg1.position = CGPointMake(284, 160);
         [self addChild:self.bg1];
        
         self.pode = NO;
@@ -45,13 +45,15 @@
         
         self.aguaFrame = [self loadSpriteSheetFromImageWithName:@"jelly" withNumberOfSprites:12 withNumberOfRows:4 withNumberOfSpritesPerRow:3];
         self.explosaoFrame = [self loadSpriteSheetFromImageWithName:@"ex1" withNumberOfSprites:25 withNumberOfRows:5 withNumberOfSpritesPerRow:5];
+        self.explosaoFrameVerde = [self loadSpriteSheetFromImageWithName:@"ex2" withNumberOfSprites:25 withNumberOfRows:5 withNumberOfSpritesPerRow:5];
         self.tirosFrame = [self alocandoSpriteTiro];
         
         
-        self.spriteTut = [[SpriteTut alloc]init];
+        self.spriteTut = [[Tut alloc]initWithParadas];
         SKAction *action = [SKAction rotateByAngle:(M_PI/2) * (-1) duration:1];
        [self.spriteTut runAction:action];
-       
+        
+        
         [self addChild:self.spriteTut];
         
         NSString *myParticlePath = [[NSBundle mainBundle] pathForResource:@"FireParticle" ofType:@"sks"];
@@ -90,6 +92,9 @@
         
         self.podeDescer = NO;
         self.podeSubir = NO;
+        
+        Player *pla = [[Player alloc]init];
+        pla.pontuacao = 5;
         
     }
     return self;
@@ -188,6 +193,8 @@
 {
     if (self.pode) {
         [self atirar];
+        [self runAction:[SKAction playSoundFileNamed:@"som.wav" waitForCompletion:NO]];
+
         self.pode = NO;
     }
     
@@ -245,6 +252,7 @@
     
     SKAction *remove = [SKAction removeFromParent];
     [enemy runAction:[SKAction sequence:@[planeDestroy,remove]]];
+    
 }
 
 #pragma mark Randon Numbers
@@ -283,6 +291,11 @@
         
     }
     return animationSheet;
+}
+
+-(void)didMoveToView:(SKView *)view
+{
+    
 }
 
 @end
