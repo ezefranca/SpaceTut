@@ -23,6 +23,7 @@
     
     if (self = [super initWithSize:size]) {
         /* Setup your scene here */
+        
         self.bg2 = [SKSpriteNode spriteNodeWithImageNamed:@"newbg2"];
         self.bg2.position = CGPointMake(568*2.5, 160);
         [self addChild:self.bg2];
@@ -297,5 +298,15 @@
 {
     
 }
+
+- (BOOL)shouldAutorotate {
+    return YES;
+}
+
+- (NSUInteger)supportedInterfaceOrientations {
+    return UIInterfaceOrientationMaskLandscapeRight;
+}
+
+
 
 @end

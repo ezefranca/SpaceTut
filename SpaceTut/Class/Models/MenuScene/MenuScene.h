@@ -7,7 +7,12 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
+#import "ViewController.h"
 
 @interface MenuScene : SKScene
 
+@property ViewController *controller;
+@property int x;
+
+-(id)initWithController : (ViewController *)c;
 @end

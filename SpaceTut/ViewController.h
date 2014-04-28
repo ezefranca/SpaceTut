@@ -11,4 +11,7 @@
 
 @interface ViewController : UIViewController
 
+@property int orientation;
+-(void)coco;
+
 @end
