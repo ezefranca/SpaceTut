@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "gameScene.h"
+#import "GameController.h"
 #import "MenuScene.h"
 
 @implementation ViewController
@@ -16,19 +17,19 @@
 {
     [super viewDidLoad];
     
-    SKView *skView = (SKView *)self.view;
-    skView.showsFPS = YES;
-    skView.showsNodeCount = YES;
+    self.skView = (SKView *)self.view;
+   // skView.showsFPS = YES;
+   // skView.showsNodeCount = YES;
 
     
     // Create and configure the scene.
   //  SKScene * scene = [MenuScene sceneWithSize:];
-    SKScene * scene = [[MenuScene alloc]initWithController:self];
-    scene.size = skView.bounds.size;
+    SKScene * scene = [gameScene sceneWithSize:self.skView.bounds.size];
+    scene.size = self.skView.bounds.size;
     scene.scaleMode = SKSceneScaleModeResizeFill;
     
     // Present the scene.
-    [skView presentScene:scene];
+    [self.skView presentScene:scene];
     
     self.orientation = 0;
 }
@@ -38,6 +39,10 @@
     return YES;
 }
 
+- (NSUInteger)supportedInterfaceOrientations {
+        return UIInterfaceOrientationMaskLandscapeRight;
+    }
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -45,6 +50,12 @@
 }
 
 -(void)coco
+{
+    [self.skView presentScene:nil];
+    self.skView = nil;
+}
+
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     
 }

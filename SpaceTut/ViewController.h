@@ -12,6 +12,8 @@
 @interface ViewController : UIViewController
 
 @property int orientation;
+@property SKView *skView;
+
 -(void)coco;
 
 @end

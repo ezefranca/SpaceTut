@@ -46,6 +46,7 @@
 		291CBAD619082DDC001F6D32 /* tut.png in Resources */ = {isa = PBXBuildFile; fileRef = 291CBABB19082DDC001F6D32 /* tut.png */; };
 		291CBAD719082DDC001F6D32 /* FireParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = 291CBABD19082DDC001F6D32 /* FireParticle.sks */; };
 		291CBAD819082DDC001F6D32 /* SnowParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = 291CBABE19082DDC001F6D32 /* SnowParticle.sks */; };
+		29626999190EFCB4003CFEB1 /* MenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 29626998190EFCB4003CFEB1 /* MenuController.m */; };
 		296E4762190988560035EC5A /* RandonRote.m in Sources */ = {isa = PBXBuildFile; fileRef = 296E4760190988560035EC5A /* RandonRote.m */; };
 		29E6218B19099807002D4D29 /* Tut.m in Sources */ = {isa = PBXBuildFile; fileRef = 29E6218A19099807002D4D29 /* Tut.m */; };
 		29E6218D19099ED9002D4D29 /* 2.png in Resources */ = {isa = PBXBuildFile; fileRef = 29E6218C19099ED9002D4D29 /* 2.png */; };
@@ -122,6 +123,8 @@
 		291CBABB19082DDC001F6D32 /* tut.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tut.png; sourceTree = "<group>"; };
 		291CBABD19082DDC001F6D32 /* FireParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = FireParticle.sks; sourceTree = "<group>"; };
 		291CBABE19082DDC001F6D32 /* SnowParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = SnowParticle.sks; sourceTree = "<group>"; };
+		29626997190EFCB4003CFEB1 /* MenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuController.h; sourceTree = "<group>"; };
+		29626998190EFCB4003CFEB1 /* MenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuController.m; sourceTree = "<group>"; };
 		296E4760190988560035EC5A /* RandonRote.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RandonRote.m; path = SpaceTut/Class/Models/RandonRoute/RandonRote.m; sourceTree = SOURCE_ROOT; };
 		296E4761190988560035EC5A /* RandonRote.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RandonRote.h; path = SpaceTut/Class/Models/RandonRoute/RandonRote.h; sourceTree = SOURCE_ROOT; };
 		29E6218919099807002D4D29 /* Tut.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tut.h; sourceTree = "<group>"; };
@@ -214,6 +217,8 @@
 				291CBA6A19082D5D001F6D32 /* Main.storyboard */,
 				291CBA6D19082D5D001F6D32 /* ViewController.h */,
 				291CBA6E19082D5D001F6D32 /* ViewController.m */,
+				29626997190EFCB4003CFEB1 /* MenuController.h */,
+				29626998190EFCB4003CFEB1 /* MenuController.m */,
 				291CBA7319082D5D001F6D32 /* Spaceship.png */,
 				291CBA7519082D5D001F6D32 /* Images.xcassets */,
 				291CBA5F19082D5D001F6D32 /* Supporting Files */,
@@ -568,6 +573,7 @@
 			files = (
 				29E95C1F19083A070015E355 /* Enemy.m in Sources */,
 				291CBA6F19082D5D001F6D32 /* ViewController.m in Sources */,
+				29626999190EFCB4003CFEB1 /* MenuController.m in Sources */,
 				291CBA6919082D5D001F6D32 /* AppDelegate.m in Sources */,
 				29E6219E1909AE3F002D4D29 /* MenuScene.m in Sources */,
 				29E6219A1909ABD4002D4D29 /* Player.m in Sources */,
