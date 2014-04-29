@@ -49,6 +49,8 @@
         self.explosaoFrameVerde = [self loadSpriteSheetFromImageWithName:@"ex2" withNumberOfSprites:25 withNumberOfRows:5 withNumberOfSpritesPerRow:5];
         self.tirosFrame = [self alocandoSpriteTiro];
         
+        self.colisao = [[Colision alloc]init];
+        self.somTiro = [SKAction playSoundFileNamed:@"som.wav" waitForCompletion:NO];
         
         self.spriteTut = [[Tut alloc]initWithParadas];
         SKAction *action = [SKAction rotateByAngle:(M_PI/2) * (-1) duration:1];
@@ -94,9 +96,25 @@
         self.podeDescer = NO;
         self.podeSubir = NO;
         
-        Player *pla = [[Player alloc]init];
-        pla.pontuacao = 5;
+        self.jogador = [[Player alloc]init];
+        self.jogador.pontuacao = 0;
         
+        //labels maneiras
+        self.labelVida = [[SKLabelNode alloc]init];
+        self.labelVida.position = CGPointMake(50, 290);
+        self.labelVida.fontColor = [UIColor whiteColor];
+        self.labelVida.fontSize = 15;
+        self.labelVida.text = @"Vida 5";
+        [self addChild:self.labelVida];
+        
+        
+        self.labelPontos = [[SKLabelNode alloc]init];
+        self.labelPontos.position = CGPointMake(500, 290);
+        self.labelPontos.fontColor = [UIColor whiteColor];
+        self.labelPontos.fontSize = 15;
+        self.labelPontos.text = @"Pontuacao 10";
+        [self addChild:self.labelPontos];
+
     }
     return self;
 }
@@ -134,8 +152,8 @@
 
 - (void)didBeginContact:(SKPhysicsContact *)contact
 {
-    NSLog(@"contact detected");
-    [Colision check:contact.bodyA.node :contact.bodyB.node :self];
+    //NSLog(@"contact detected");
+    [self.colisao check:contact.bodyA.node :contact.bodyB.node :self];
 }
 
 #pragma mark Main Game Loop
@@ -181,20 +199,24 @@
     if (self.podeMoverBg2) {
          self.bg2.position = CGPointMake(self.bg2.position.x+amtToMove.x, self.bg2.position.y);
     }
+    
+    
+    self.labelVida.text = [NSString stringWithFormat:@"Vida %d", self.spriteTut.life];
+    self.labelPontos.text = [NSString stringWithFormat:@"Pontuacao %d", self.jogador.pontuacao];
 }
 
 -(void)atirar
 {
     SKSpriteNode *tiro = [[Shot alloc]initWithAnimationAndPosition:self.tirosFrame :CGPointMake(self.spriteTut.position.x + 60, self.spriteTut.position.y)  ];
     [self addChild:tiro];
-    [tiro.physicsBody applyForce:CGVectorMake(25.0f, 0.0f)];
+    [tiro.physicsBody applyForce:CGVectorMake(40.0f, 0.0f)];
 }
 
 -(void)tutMoviments
 {
     if (self.pode) {
         [self atirar];
-        [self runAction:[SKAction playSoundFileNamed:@"som.wav" waitForCompletion:NO]];
+        [self runAction:self.somTiro];
 
         self.pode = NO;
     }

@@ -12,6 +12,7 @@
 #import "Define.h"
 #import "Timer.h"
 #import "Tut.h"
+#import "Player.h"
 #import "Colision.h"
 
 
@@ -35,5 +36,10 @@
 @property BOOL podeDescer;
 @property SKEmitterNode *FireParticle;
 @property Timer *emenySpawn;
+@property Colision *colisao;
+@property SKAction *somTiro;
+@property SKLabelNode *labelPontos;
+@property SKLabelNode  *labelVida;
+@property Player *jogador;
 
 @end

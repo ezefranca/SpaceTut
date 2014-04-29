@@ -8,7 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import <SpriteKit/SpriteKit.h>
+#import "Player.h"
 
 @interface Colision : NSObject
-+(void)check : (SKNode*)bodyA : (SKNode*)bodyB : (SKScene *)Scene;
+-(void)check : (SKNode*)bodyA : (SKNode*)bodyB : (SKScene *)Scene;
+@property NSArray *batTut;
+@property SKAction *tutDano;
+@property  Player   *jogador;
 @end

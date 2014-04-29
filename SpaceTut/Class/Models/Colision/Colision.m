@@ -14,7 +14,25 @@
 
 @implementation Colision
 
-+(void)check : (SKNode*)bodyA : (SKNode*)bodyB : (gameScene *)Scene
+-(id)init
+{
+    self = [super init];
+    
+    if (self) {
+        
+        self.batTut = @[[SKTexture textureWithImageNamed:@"2"], [SKTexture textureWithImageNamed:@"tut"] ] ;
+        
+        self.tutDano = [SKAction animateWithTextures:self.batTut timePerFrame:0.15f];
+        
+        self.jogador = [[Player alloc]init] ;
+        self.jogador.pontuacao = 0;
+    }
+    
+    return self;
+}
+
+
+-(void)check : (SKNode*)bodyA : (SKNode*)bodyB : (gameScene *)Scene
 {
     
     if ([bodyA.name isEqualToString:@"tut"]) {
@@ -22,11 +40,10 @@
         Tut *t = (Tut*)bodyA;
         t.life = t.life - 1;
         
-        SKAction *cu = [SKAction animateWithTextures:@[[SKTexture textureWithImageNamed:@"2"], [SKTexture textureWithImageNamed:@"tut"] ] timePerFrame:0.15f];
-        [t runAction:[SKAction repeatAction:cu count:1]];
+        [t runAction:[SKAction repeatAction:self.tutDano count:1]];
 
+         [bodyB removeFromParent];
         
-        NSLog(@"%i" , t.life);
         if(![Tut checkLife:t])
         {
             SKSpriteNode *explosao = [[Explosion alloc]initWithAnimationAndPosition:Scene.explosaoFrameVerde :CGPointMake(bodyA.position.x , bodyA.position.y ) : CGSizeMake(150, 150)];
@@ -34,6 +51,8 @@
             [t removeFromParent];
             [Scene.FireParticle removeFromParent];
         }
+        
+       
     }
     
     if ([bodyA.name isEqualToString:@"tiro"]) {
@@ -48,6 +67,8 @@
             Enemy *e = (Enemy *)bodyB;
             e.life = e.life - 1;
             [Enemy checkLife:e];
+            
+            self.jogador.pontuacao += 10;
         }
         //checar BOSS
         

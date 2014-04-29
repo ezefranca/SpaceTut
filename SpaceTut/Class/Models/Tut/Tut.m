@@ -32,7 +32,7 @@
         self.physicsBody.collisionBitMask = tartaruga | borda ;
         self.zPosition = 100;
         self.anchorPoint = CGPointMake(0.5, 0.5);
-        self.life = 2;
+        self.life = 5;
         
 	}
 	return self;
