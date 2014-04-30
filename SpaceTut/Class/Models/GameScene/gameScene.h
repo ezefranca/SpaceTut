@@ -13,6 +13,7 @@
 #import "Timer.h"
 #import "Tut.h"
 #import "Player.h"
+#import "Enemy.h"
 #import "Colision.h"
 
 
@@ -30,6 +31,7 @@
 @property BOOL podeMoverBg2;
 @property NSArray *aguaFrame;
 @property NSArray *tirosFrame;
+@property NSArray *bossFrame;
 @property NSArray *explosaoFrame;
 @property NSArray *explosaoFrameVerde;
 @property BOOL podeSubir;
@@ -41,5 +43,10 @@
 @property SKLabelNode *labelPontos;
 @property SKLabelNode  *labelVida;
 @property Player *jogador;
+@property NSArray *tiroBoss;
+@property Enemy *boss;
+
+@property int countJelly;
+@property BOOL bicho_criado;
 
 @end

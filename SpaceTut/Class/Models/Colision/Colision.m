@@ -56,9 +56,16 @@
     }
     
     if ([bodyA.name isEqualToString:@"tiro"]) {
+        SKSpriteNode *explosao;
         
-
-        SKSpriteNode *explosao = [[Explosion alloc]initWithAnimationAndPosition:Scene.explosaoFrame :CGPointMake(bodyA.position.x + 30, bodyA.position.y ) : CGSizeMake(50, 50)];
+        if ([bodyB.name isEqualToString: @"boss"]) {
+             explosao = [[Explosion alloc]initWithAnimationAndPosition:Scene.explosaoFrame :CGPointMake(bodyA.position.x + 30, bodyA.position.y ) : CGSizeMake( 150, 150)];
+        }
+        else
+        {
+               explosao = [[Explosion alloc]initWithAnimationAndPosition:Scene.explosaoFrame :CGPointMake(bodyA.position.x + 30, bodyA.position.y ) : CGSizeMake( 50, 50)];
+        }
+        
         [Scene addChild:explosao];
         [bodyA removeFromParent];
 
@@ -71,7 +78,29 @@
             self.jogador.pontuacao += 10;
         }
         //checar BOSS
-        
+        if ([bodyB.name isEqualToString:@"tut"]) {
+            Tut *t = (Tut*)bodyB;
+            t.life = t.life - 1;
+            
+            [t runAction:[SKAction repeatAction:self.tutDano count:1]];
+            
+            if(![Tut checkLife:t])
+            {
+                SKSpriteNode *explosao = [[Explosion alloc]initWithAnimationAndPosition:Scene.explosaoFrameVerde :CGPointMake(bodyA.position.x , bodyA.position.y ) : CGSizeMake(150, 150)];
+                [Scene addChild:explosao];
+                [t removeFromParent];
+                [Scene.FireParticle removeFromParent];
+                
+                SKLabelNode *l = [[SKLabelNode alloc]init];
+                l = [[SKLabelNode alloc]init];
+                l.position = CGPointMake(200, 160);
+                l.fontColor = [UIColor whiteColor];
+                l.fontSize = 40;
+                l.text = @"VOCE PERDEU";
+                [Scene addChild:l];
+            }
+
+        }
         
         //matar
         

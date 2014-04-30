@@ -61,6 +61,10 @@
 		29E95C4219084F3E0015E355 /* Explosion.m in Sources */ = {isa = PBXBuildFile; fileRef = 29E95C4119084F3E0015E355 /* Explosion.m */; };
 		29E95C45190853330015E355 /* MyParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = 29E95C43190853330015E355 /* MyParticle.sks */; };
 		29E95C46190853330015E355 /* bokeh.png in Resources */ = {isa = PBXBuildFile; fileRef = 29E95C44190853330015E355 /* bokeh.png */; };
+		C032DFC61911594900DF19CF /* jelly2.png in Resources */ = {isa = PBXBuildFile; fileRef = C032DFC51911594900DF19CF /* jelly2.png */; };
+		C032DFCB19115AEA00DF19CF /* tiro10.png in Resources */ = {isa = PBXBuildFile; fileRef = C032DFC819115AEA00DF19CF /* tiro10.png */; };
+		C032DFCC19115AEA00DF19CF /* tiro20.png in Resources */ = {isa = PBXBuildFile; fileRef = C032DFC919115AEA00DF19CF /* tiro20.png */; };
+		C032DFCD19115AEA00DF19CF /* tiro30.png in Resources */ = {isa = PBXBuildFile; fileRef = C032DFCA19115AEA00DF19CF /* tiro30.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -145,6 +149,10 @@
 		29E95C4119084F3E0015E355 /* Explosion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Explosion.m; sourceTree = "<group>"; };
 		29E95C43190853330015E355 /* MyParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MyParticle.sks; sourceTree = "<group>"; };
 		29E95C44190853330015E355 /* bokeh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bokeh.png; sourceTree = "<group>"; };
+		C032DFC51911594900DF19CF /* jelly2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = jelly2.png; sourceTree = "<group>"; };
+		C032DFC819115AEA00DF19CF /* tiro10.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tiro10.png; sourceTree = "<group>"; };
+		C032DFC919115AEA00DF19CF /* tiro20.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tiro20.png; sourceTree = "<group>"; };
+		C032DFCA19115AEA00DF19CF /* tiro30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tiro30.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -316,6 +324,8 @@
 		291CBAA819082DDC001F6D32 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				C032DFC719115AEA00DF19CF /* tiros2 */,
+				C032DFC51911594900DF19CF /* jelly2.png */,
 				29E621951909AADE002D4D29 /* ex2.png */,
 				29E6218C19099ED9002D4D29 /* 2.png */,
 				291CBAA919082DDC001F6D32 /* background.png */,
@@ -441,6 +451,16 @@
 			path = RandonRote;
 			sourceTree = "<group>";
 		};
+		C032DFC719115AEA00DF19CF /* tiros2 */ = {
+			isa = PBXGroup;
+			children = (
+				C032DFC819115AEA00DF19CF /* tiro10.png */,
+				C032DFC919115AEA00DF19CF /* tiro20.png */,
+				C032DFCA19115AEA00DF19CF /* tiro30.png */,
+			);
+			path = tiros2;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -532,9 +552,11 @@
 				291CBAD819082DDC001F6D32 /* SnowParticle.sks in Resources */,
 				291CBA7619082D5D001F6D32 /* Images.xcassets in Resources */,
 				291CBAD719082DDC001F6D32 /* FireParticle.sks in Resources */,
+				C032DFC61911594900DF19CF /* jelly2.png in Resources */,
 				291CBAD219082DDC001F6D32 /* tiro6.png in Resources */,
 				29E6218D19099ED9002D4D29 /* 2.png in Resources */,
 				29E621921909A58D002D4D29 /* shot.wav in Resources */,
+				C032DFCD19115AEA00DF19CF /* tiro30.png in Resources */,
 				29E621941909A6E6002D4D29 /* som.wav in Resources */,
 				291CBAC919082DDC001F6D32 /* newbg1.png in Resources */,
 				291CBACE19082DDC001F6D32 /* tiro2.png in Resources */,
@@ -542,9 +564,11 @@
 				291CBA7419082D5D001F6D32 /* Spaceship.png in Resources */,
 				29E621961909AADE002D4D29 /* ex2.png in Resources */,
 				291CBAD419082DDC001F6D32 /* tiro8.png in Resources */,
+				C032DFCB19115AEA00DF19CF /* tiro10.png in Resources */,
 				291CBAC719082DDC001F6D32 /* ex1.png in Resources */,
 				291CBA6C19082D5D001F6D32 /* Main.storyboard in Resources */,
 				291CBACD19082DDC001F6D32 /* tiro1.png in Resources */,
+				C032DFCC19115AEA00DF19CF /* tiro20.png in Resources */,
 				291CBAD019082DDC001F6D32 /* tiro4.png in Resources */,
 				291CBACF19082DDC001F6D32 /* tiro3.png in Resources */,
 				29E95C45190853330015E355 /* MyParticle.sks in Resources */,

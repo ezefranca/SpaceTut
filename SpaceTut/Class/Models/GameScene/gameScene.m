@@ -45,9 +45,14 @@
         [self addChild:self.chao];
         
         self.aguaFrame = [self loadSpriteSheetFromImageWithName:@"jelly" withNumberOfSprites:12 withNumberOfRows:4 withNumberOfSpritesPerRow:3];
+        
+        self.bossFrame = [self loadSpriteSheetFromImageWithName:@"jelly2" withNumberOfSprites:12 withNumberOfRows:4 withNumberOfSpritesPerRow:3];
+        
         self.explosaoFrame = [self loadSpriteSheetFromImageWithName:@"ex1" withNumberOfSprites:25 withNumberOfRows:5 withNumberOfSpritesPerRow:5];
         self.explosaoFrameVerde = [self loadSpriteSheetFromImageWithName:@"ex2" withNumberOfSprites:25 withNumberOfRows:5 withNumberOfSpritesPerRow:5];
         self.tirosFrame = [self alocandoSpriteTiro];
+        
+        self.tiroBoss = [self alocandoSpriteTironovo];
         
         self.colisao = [[Colision alloc]init];
         self.somTiro = [SKAction playSoundFileNamed:@"som.wav" waitForCompletion:NO];
@@ -114,7 +119,10 @@
         self.labelPontos.fontSize = 15;
         self.labelPontos.text = @"Pontuacao 10";
         [self addChild:self.labelPontos];
-
+        
+        self.countJelly = 0;
+        self.bicho_criado = NO;
+        
     }
     return self;
 }
@@ -160,12 +168,47 @@
 
 -(void)update:(CFTimeInterval)currentTime {
     
-    
-    [self.emenySpawn stopTimer];
-    if ((int)[self.emenySpawn timeElapsedInSeconds] == 1) {
+    if (self.countJelly < 30) {
+        [self.emenySpawn stopTimer];
+        if ((int)[self.emenySpawn timeElapsedInSeconds] == 1) {
+            
+            [self gerateEnemy];
+            [self.emenySpawn startTimer];
+        }
+
+    }
+    else
+    {
+        if (self.bicho_criado == NO) {
+            self.bicho_criado = YES;
         
-        [self gerateEnemy];
-        [self.emenySpawn startTimer];
+            [self criarBoss];
+        }
+        
+        if (self.bicho_criado == YES) {
+            [self.emenySpawn stopTimer];
+            if ((int)[self.emenySpawn timeElapsedInSeconds] == 1) {
+                
+                if (self.boss.life > 0) {
+                    [self atirarNovo];
+                    [self.emenySpawn startTimer];
+                }
+                else
+                {
+                    SKAction *s = [SKAction moveToX:700 duration:0.5];
+                    [self.FireParticle runAction:s];
+                    [self.spriteTut runAction:s];
+                    
+                    SKLabelNode *l = [[SKLabelNode alloc]init];
+                    l = [[SKLabelNode alloc]init];
+                    l.position = CGPointMake(284, 160);
+                    l.fontColor = [UIColor whiteColor];
+                    l.fontSize = 40;
+                    l.text = @"VOCE GANHOU";
+                    [self addChild:l];
+                }
+            }
+        }
     }
     
     [self enumerateChildNodesWithName:@"explosao" usingBlock:^(SKNode *node, BOOL *stop) {
@@ -210,6 +253,37 @@
     SKSpriteNode *tiro = [[Shot alloc]initWithAnimationAndPosition:self.tirosFrame :CGPointMake(self.spriteTut.position.x + 60, self.spriteTut.position.y)  ];
     [self addChild:tiro];
     [tiro.physicsBody applyForce:CGVectorMake(40.0f, 0.0f)];
+}
+
+-(void)atirarNovo
+{
+    SKSpriteNode *tiro = [[Shot alloc]initWithAnimationAndPosition:self.tiroBoss :CGPointMake(300, 160)  ];
+    [self addChild:tiro];
+    [tiro.physicsBody applyForce:CGVectorMake(-40.0f, 0.0f)];
+}
+
+-(void)criarBoss
+{
+    self.boss = [[Enemy alloc]initWithAnimationAndPosition:self.bossFrame ];
+        /*
+     CGPoint s = CGPointMake(600.0, 160);
+     CGPoint e = CGPointMake(0.0, 320);
+     CGPoint cp1 = CGPointMake(450, 320);
+     CGPoint cp2 = CGPointMake(250, -320);
+     CGPathMoveToPoint(cgpath,NULL, s.x, s.y);
+     CGPathAddCurveToPoint(cgpath, NULL, cp1.x, cp1.y, cp2.x, cp2.y, e.x, e.y);
+     */
+    SKAction *s = [SKAction moveTo:CGPointMake(420, 160) duration:1];
+    
+    self.boss.size = CGSizeMake(150, 150);
+    self.boss.position = CGPointMake(568, 160 );
+    self.boss.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:self.boss.size.width/4];
+    self.boss.life = 10;
+    self.boss.name = @"boss";
+    self.boss.physicsBody.dynamic = NO;
+    [self.boss runAction:s];
+    
+    [self addChild:self.boss];
 }
 
 -(void)tutMoviments
@@ -258,9 +332,9 @@
 
 -(void)gerateEnemy{
     
-    SKSpriteNode *enemy = [[Enemy alloc]initWithAnimationAndPosition:self.aguaFrame ];
     
     
+    Enemy *enemy = [[Enemy alloc]initWithAnimationAndPosition:self.aguaFrame ];
      CGMutablePathRef cgpath = [RandonRote returnRote:[ self getRandomNumberBetween:1 to:5]];
        /*
     CGPoint s = CGPointMake(600.0, 160);
@@ -276,6 +350,9 @@
     SKAction *remove = [SKAction removeFromParent];
     [enemy runAction:[SKAction sequence:@[planeDestroy,remove]]];
     
+    
+    self.countJelly +=1;
+    
 }
 
 #pragma mark Randon Numbers
@@ -290,6 +367,12 @@
 -(NSArray *)alocandoSpriteTiro
 {
     NSArray *s = [NSArray arrayWithObjects:[SKTexture textureWithImageNamed:@"tiro3"],[SKTexture textureWithImageNamed:@"tiro2"],[SKTexture textureWithImageNamed:@"tiro1"], nil];
+    return s;
+}
+
+-(NSArray *)alocandoSpriteTironovo
+{
+    NSArray *s = [NSArray arrayWithObjects:[SKTexture textureWithImageNamed:@"tiro30"],[SKTexture textureWithImageNamed:@"tiro20"],[SKTexture textureWithImageNamed:@"tiro10"], nil];
     return s;
 }
 

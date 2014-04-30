@@ -28,7 +28,7 @@
         self.name = @"tut" ;
         self.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:self.size.width/2];
         self.physicsBody.categoryBitMask = tartaruga;
-        self.physicsBody.contactTestBitMask = tartaruga | borda | inimigo;
+        self.physicsBody.contactTestBitMask = tartaruga | borda | inimigo | tiroAzul;
         self.physicsBody.collisionBitMask = tartaruga | borda ;
         self.zPosition = 100;
         self.anchorPoint = CGPointMake(0.5, 0.5);
