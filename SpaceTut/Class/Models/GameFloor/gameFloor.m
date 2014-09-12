@@ -11,12 +11,9 @@
 
 @implementation gameFloor
 
--(id)initWithSize : (CGSize)size
-{
+-(id)initWithSize : (CGSize)size{
     self = [super init];
-    
     if (self) {
-        
         self.color = [UIColor yellowColor];
         self.size = size;
         self.position = CGPointMake(size.width / 2, -1);
@@ -24,7 +21,6 @@
         self.physicsBody.categoryBitMask = borda;
         self.physicsBody.dynamic = NO;
     }
-    
     return self;
 }
 

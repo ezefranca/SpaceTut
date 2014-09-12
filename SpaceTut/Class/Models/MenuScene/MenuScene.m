@@ -15,8 +15,7 @@
 @implementation MenuScene
 @synthesize controller;
 
--(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
    
     [self.view endEditing:YES];
     
@@ -36,8 +35,7 @@
 
 }
 
--(void)didMoveToView:(SKView *)view
-{
+-(void)didMoveToView:(SKView *)view{
     /*
     NSLog(@"%f   %f" , view.bounds.size.width ,  view.bounds.size.height);
     UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(10, view.bounds.size.width / 2 -20, 200, 40)];
@@ -58,8 +56,7 @@
     */
 }
 
--(id)initWithController : (ViewController *)c
-{
+-(id)initWithController : (ViewController *)c{
     self = [super init];
     
     if (self) {

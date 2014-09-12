@@ -10,36 +10,27 @@
 
 @implementation Player
 
-+(Player *) sharedStore
-{
++(Player *) sharedStore{
     static Player *sharedStore = nil;
     
-    if(!sharedStore)
-    {
+    if(!sharedStore){
         sharedStore = [[super allocWithZone:nil] init];
-        
     }
-    
     return sharedStore;
 }
 
-+(id) allocWithZone: (struct _NSZone *) zone
-{
++(id) allocWithZone: (struct _NSZone *) zone{
     return [self sharedStore];
 }
 
--(id)init
-{
+-(id)init{
     self = [super init];
     
-    if (self)
-    {
-        if (!self.nome)
-        {
+    if (self){
+        if (!self.nome){
             self.nome = [[NSString alloc]init];
         }
     }
-    
     return self;
 }
 

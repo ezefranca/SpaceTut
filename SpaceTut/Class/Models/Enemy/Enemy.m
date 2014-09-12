@@ -11,12 +11,9 @@
 
 @implementation Enemy
 
--(id)initWithAnimationAndPosition : (NSArray *)frames
-{
+-(id)initWithAnimationAndPosition : (NSArray *)frames{
     self = [super init];
-    
     if (self) {
-        
         self.size = CGSizeMake(50, 50);
         SKAction *cu = [SKAction animateWithTextures:frames timePerFrame:0.2f];
         [self runAction:[SKAction repeatActionForever:cu]];
@@ -30,14 +27,11 @@
         self.physicsBody.contactTestBitMask = tartaruga | borda | tiroAzul;
         self.physicsBody.collisionBitMask = tartaruga | borda | tiroAzul;
         self.life = 1;
-
     }
-    
     return self;
 }
 
-+(void)checkLife : (Enemy *)e
-{
++(void)checkLife : (Enemy *)e{
     if (e.life == 0) {
         [e removeFromParent];
     }

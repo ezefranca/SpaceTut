@@ -16,7 +16,6 @@
 #import "Enemy.h"
 #import "Colision.h"
 
-
 @interface gameScene : SKScene <SKPhysicsContactDelegate>
 
 @property Tut *spriteTut;
@@ -46,7 +45,11 @@
 @property NSArray *tiroBoss;
 @property Enemy *boss;
 
+@property BOOL taVoltando;
+
 @property int countJelly;
 @property BOOL bicho_criado;
+
+
 
 @end

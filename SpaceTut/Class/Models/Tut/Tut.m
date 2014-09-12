@@ -12,9 +12,7 @@
 
 @implementation Tut
 
--(id)initWithParadas
-{
-    
+-(id)initWithParadas{
     self = [super init];
     
 	if (self) {
@@ -39,12 +37,10 @@
     
 }
 
-+(BOOL)checkLife : (Tut *)t
-{
++(BOOL)checkLife : (Tut *)t{
     if (t.life == 0) {
         return NO;
     }
-    
     return YES;
 }
 

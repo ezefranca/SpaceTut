@@ -10,21 +10,17 @@
 #import "gameScene.h"
 #import "GameController.h"
 #import "MenuScene.h"
+#import "InitialMenu.h"
 
 @implementation ViewController
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad{
     [super viewDidLoad];
-    
     self.skView = (SKView *)self.view;
-   // skView.showsFPS = YES;
-   // skView.showsNodeCount = YES;
-
     
-    // Create and configure the scene.
-  //  SKScene * scene = [MenuScene sceneWithSize:];
-    SKScene * scene = [gameScene sceneWithSize:self.skView.bounds.size];
+//    SKScene * scene = [MenuScene sceneWithSize:];
+    //SKScene * scene = [gameScene sceneWithSize:self.skView.bounds.size];
+    SKScene *scene = [[InitialMenu alloc] initWithSize:self.skView.bounds.size];
     scene.size = self.skView.bounds.size;
     scene.scaleMode = SKSceneScaleModeResizeFill;
     
@@ -34,23 +30,20 @@
     self.orientation = 0;
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation{
     return YES;
 }
 
 - (NSUInteger)supportedInterfaceOrientations {
-        return UIInterfaceOrientationMaskLandscapeRight;
-    }
+    return UIInterfaceOrientationMaskLandscapeRight;
+}
 
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning{
     [super didReceiveMemoryWarning];
     // Release any cached data, images, etc that aren't in use.
 }
 
--(void)coco
-{
+-(void)coco{
     [self.skView presentScene:nil];
     self.skView = nil;
 }

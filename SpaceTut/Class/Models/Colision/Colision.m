@@ -14,27 +14,21 @@
 
 @implementation Colision
 
--(id)init
-{
+-(id)init{
     self = [super init];
-    
     if (self) {
-        
         self.batTut = @[[SKTexture textureWithImageNamed:@"2"], [SKTexture textureWithImageNamed:@"tut"] ] ;
-        
+
         self.tutDano = [SKAction animateWithTextures:self.batTut timePerFrame:0.15f];
         
         self.jogador = [[Player alloc]init] ;
         self.jogador.pontuacao = 0;
     }
-    
     return self;
 }
 
 
--(void)check : (SKNode*)bodyA : (SKNode*)bodyB : (gameScene *)Scene
-{
-    
+-(void)check : (SKNode*)bodyA : (SKNode*)bodyB : (gameScene *)Scene{
     if ([bodyA.name isEqualToString:@"tut"]) {
       
         Tut *t = (Tut*)bodyA;
@@ -44,26 +38,21 @@
 
          [bodyB removeFromParent];
         
-        if(![Tut checkLife:t])
-        {
+        if(![Tut checkLife:t]){
             SKSpriteNode *explosao = [[Explosion alloc]initWithAnimationAndPosition:Scene.explosaoFrameVerde :CGPointMake(bodyA.position.x , bodyA.position.y ) : CGSizeMake(150, 150)];
             [Scene addChild:explosao];
             [t removeFromParent];
             [Scene.FireParticle removeFromParent];
         }
-        
-       
     }
     
     if ([bodyA.name isEqualToString:@"tiro"]) {
         SKSpriteNode *explosao;
-        
         if ([bodyB.name isEqualToString: @"boss"]) {
              explosao = [[Explosion alloc]initWithAnimationAndPosition:Scene.explosaoFrame :CGPointMake(bodyA.position.x + 30, bodyA.position.y ) : CGSizeMake( 150, 150)];
         }
-        else
-        {
-               explosao = [[Explosion alloc]initWithAnimationAndPosition:Scene.explosaoFrame :CGPointMake(bodyA.position.x + 30, bodyA.position.y ) : CGSizeMake( 50, 50)];
+        else{
+            explosao = [[Explosion alloc]initWithAnimationAndPosition:Scene.explosaoFrame :CGPointMake(bodyA.position.x + 30, bodyA.position.y ) : CGSizeMake( 50, 50)];
         }
         
         [Scene addChild:explosao];
@@ -84,8 +73,7 @@
             
             [t runAction:[SKAction repeatAction:self.tutDano count:1]];
             
-            if(![Tut checkLife:t])
-            {
+            if(![Tut checkLife:t]){
                 SKSpriteNode *explosao = [[Explosion alloc]initWithAnimationAndPosition:Scene.explosaoFrameVerde :CGPointMake(bodyA.position.x , bodyA.position.y ) : CGSizeMake(150, 150)];
                 [Scene addChild:explosao];
                 [t removeFromParent];
@@ -96,14 +84,12 @@
                 l.position = CGPointMake(200, 160);
                 l.fontColor = [UIColor whiteColor];
                 l.fontSize = 40;
-                l.text = @"VOCE PERDEU";
+                l.text = @"Você perdeu!";
                 [Scene addChild:l];
             }
 
         }
-        
         //matar
-        
     }
 }
 

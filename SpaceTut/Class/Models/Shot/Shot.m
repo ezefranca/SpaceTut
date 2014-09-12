@@ -11,13 +11,9 @@
 
 @implementation Shot
 
--(id)initWithAnimationAndPosition : (NSArray *)frames : (CGPoint)position
-{
+-(id)initWithAnimationAndPosition : (NSArray *)frames : (CGPoint)position{
     self = [super init];
-    
-    if(self)
-    {
-       
+    if(self){
         self.position = position;
         self.size = CGSizeMake(40, 18);
         self.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:self.size];
@@ -29,9 +25,7 @@
         self.physicsBody.dynamic = YES;
         SKAction *cu = [SKAction animateWithTextures:frames timePerFrame:0.2f];
         [self runAction:[SKAction repeatActionForever:cu]];
-
     }
-    
     return self;
 }
 

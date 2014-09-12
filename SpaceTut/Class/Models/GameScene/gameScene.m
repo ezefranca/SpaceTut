@@ -12,6 +12,7 @@
 #import "Shot.h"
 #import "RandonRote.h"
 #import "Player.h"
+#import "InitialMenu.h"
 
 @implementation gameScene
 
@@ -20,26 +21,23 @@
 #pragma mark class init
 
 -(id)initWithSize:(CGSize)size {
-    
     if (self = [super initWithSize:size]) {
         /* Setup your scene here */
+        self.taVoltando = false;
         
-        self.bg2 = [SKSpriteNode spriteNodeWithImageNamed:@"newbg2"];
+        self.bg2 = [SKSpriteNode spriteNodeWithImageNamed:@"space grande.jpg"];
         self.bg2.position = CGPointMake(568*2.5, 160);
         [self addChild:self.bg2];
-        
-        
         
         self.emenySpawn = [[Timer alloc]init];
         [self.emenySpawn startTimer];
         
         
-        self.bg1 = [SKSpriteNode spriteNodeWithImageNamed:@"newbg1"];
+        self.bg1 = [SKSpriteNode spriteNodeWithImageNamed:@"space grande.jpg"];
         self.bg1.position = CGPointMake(284, 160);
         [self addChild:self.bg1];
        
         self.pode = NO;
-        
         
         self.chao = [[gameFloor alloc]initWithSize:CGSizeMake(size.height , 1)];
         [self addChild:self.chao];
@@ -70,12 +68,10 @@
         self.FireParticle.particleBirthRate = 100;
         
         
-        
         NSString *myParticlePath2 = [[NSBundle mainBundle] pathForResource:@"SnowParticle" ofType:@"sks"];
         SKEmitterNode*p = [NSKeyedUnarchiver unarchiveObjectWithFile:myParticlePath2];
         p.particlePosition = CGPointMake(270, 160);
         p.particleBirthRate = 10;
-        
         
         
         [self addChild:self.FireParticle];
@@ -105,19 +101,19 @@
         self.jogador.pontuacao = 0;
         
         //labels maneiras
-        self.labelVida = [[SKLabelNode alloc]init];
+        self.labelVida = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
         self.labelVida.position = CGPointMake(50, 290);
+        
         self.labelVida.fontColor = [UIColor whiteColor];
         self.labelVida.fontSize = 15;
-        self.labelVida.text = @"Vida 5";
+        self.labelVida.text = @"Vidas: 5";
         [self addChild:self.labelVida];
         
-        
-        self.labelPontos = [[SKLabelNode alloc]init];
+        self.labelPontos = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
         self.labelPontos.position = CGPointMake(500, 290);
         self.labelPontos.fontColor = [UIColor whiteColor];
         self.labelPontos.fontSize = 15;
-        self.labelPontos.text = @"Pontuacao 10";
+        self.labelPontos.text = @"Pontos: 10";
         [self addChild:self.labelPontos];
         
         self.countJelly = 0;
@@ -149,8 +145,7 @@
 }
 
 
--(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
-{
+-(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
     self.pode = NO;
     self.podeDescer = NO;
     self.podeSubir = NO;
@@ -158,33 +153,26 @@
 
 #pragma mark Colision
 
-- (void)didBeginContact:(SKPhysicsContact *)contact
-{
+- (void)didBeginContact:(SKPhysicsContact *)contact{
     //NSLog(@"contact detected");
     [self.colisao check:contact.bodyA.node :contact.bodyB.node :self];
 }
 
 #pragma mark Main Game Loop
-
 -(void)update:(CFTimeInterval)currentTime {
-    
     if (self.countJelly < 30) {
         [self.emenySpawn stopTimer];
         if ((int)[self.emenySpawn timeElapsedInSeconds] == 1) {
-            
             [self gerateEnemy];
             [self.emenySpawn startTimer];
         }
 
     }
-    else
-    {
+    else{
         if (self.bicho_criado == NO) {
             self.bicho_criado = YES;
-        
             [self criarBoss];
         }
-        
         if (self.bicho_criado == YES) {
             [self.emenySpawn stopTimer];
             if ((int)[self.emenySpawn timeElapsedInSeconds] == 1) {
@@ -193,9 +181,8 @@
                     [self atirarNovo];
                     [self.emenySpawn startTimer];
                 }
-                else
-                {
-                    SKAction *s = [SKAction moveToX:700 duration:0.5];
+                else{
+                    SKAction *s = [SKAction moveToX:700 duration:1];
                     [self.FireParticle runAction:s];
                     [self.spriteTut runAction:s];
                     
@@ -204,8 +191,14 @@
                     l.position = CGPointMake(284, 160);
                     l.fontColor = [UIColor whiteColor];
                     l.fontSize = 40;
-                    l.text = @"VOCE GANHOU";
+                    l.text = @"Você ganhou!";
                     [self addChild:l];
+                    
+                    if (!_taVoltando) {
+                        _taVoltando = true;
+                        [self performSelector:@selector(voltaMenu) withObject:nil afterDelay:5];
+                    }
+                    
                 }
             }
         }
@@ -221,12 +214,10 @@
     [self verificaBackground];
     
     //To compute velocity we need delta time to multiply by points per second
-    if (self.lastUpdateTime)
-    {
+    if (self.lastUpdateTime){
         self.deltaTime = currentTime - self.lastUpdateTime;
     }
-    else
-    {
+    else{
         self.deltaTime = 0;
     }
     
@@ -242,28 +233,38 @@
     if (self.podeMoverBg2) {
          self.bg2.position = CGPointMake(self.bg2.position.x+amtToMove.x, self.bg2.position.y);
     }
+
+    self.labelVida.text = [NSString stringWithFormat:@"Vidas: %d", self.spriteTut.life];
+    self.labelPontos.text = [NSString stringWithFormat:@"Pontos: %d", self.jogador.pontuacao];
     
-    
-    self.labelVida.text = [NSString stringWithFormat:@"Vida %d", self.spriteTut.life];
-    self.labelPontos.text = [NSString stringWithFormat:@"Pontuacao %d", self.jogador.pontuacao];
+    if ( self.spriteTut.life <= 0) {
+        SKLabelNode *l = [[SKLabelNode alloc]init];
+        l = [[SKLabelNode alloc]init];
+        l.position = CGPointMake(200, 160);
+        l.fontColor = [UIColor whiteColor];
+        l.fontSize = 40;
+        l.text = @"Você perdeu!";
+        [self addChild:l];
+        if (!_taVoltando) {
+            _taVoltando = true;
+            [self performSelector:@selector(voltaMenu) withObject:nil afterDelay:5];
+        }
+    }
 }
 
--(void)atirar
-{
+-(void)atirar{
     SKSpriteNode *tiro = [[Shot alloc]initWithAnimationAndPosition:self.tirosFrame :CGPointMake(self.spriteTut.position.x + 60, self.spriteTut.position.y)  ];
     [self addChild:tiro];
     [tiro.physicsBody applyForce:CGVectorMake(40.0f, 0.0f)];
 }
 
--(void)atirarNovo
-{
+-(void)atirarNovo{
     SKSpriteNode *tiro = [[Shot alloc]initWithAnimationAndPosition:self.tiroBoss :CGPointMake(300, 160)  ];
     [self addChild:tiro];
     [tiro.physicsBody applyForce:CGVectorMake(-40.0f, 0.0f)];
 }
 
--(void)criarBoss
-{
+-(void)criarBoss{
     self.boss = [[Enemy alloc]initWithAnimationAndPosition:self.bossFrame ];
         /*
      CGPoint s = CGPointMake(600.0, 160);
@@ -278,7 +279,7 @@
     self.boss.size = CGSizeMake(150, 150);
     self.boss.position = CGPointMake(568, 160 );
     self.boss.physicsBody = [SKPhysicsBody bodyWithCircleOfRadius:self.boss.size.width/4];
-    self.boss.life = 10;
+    self.boss.life = 100;
     self.boss.name = @"boss";
     self.boss.physicsBody.dynamic = NO;
     [self.boss runAction:s];
@@ -286,9 +287,8 @@
     [self addChild:self.boss];
 }
 
--(void)tutMoviments
-{
-    if (self.pode) {
+-(void)tutMoviments{
+    if (self.pode && (self.spriteTut.life > 0)) {
         [self atirar];
         [self runAction:self.somTiro];
 
@@ -306,8 +306,7 @@
     }
 }
 
--(void)verificaBackground
-{
+-(void)verificaBackground{
     //varios bg monstro infinito
     if (self.bg1.position.x <= -270) {
         self.podeMoverBg2 = YES;
@@ -331,9 +330,6 @@
 #pragma mark gerando inimigos
 
 -(void)gerateEnemy{
-    
-    
-    
     Enemy *enemy = [[Enemy alloc]initWithAnimationAndPosition:self.aguaFrame ];
      CGMutablePathRef cgpath = [RandonRote returnRote:[ self getRandomNumberBetween:1 to:5]];
        /*
@@ -357,21 +353,27 @@
 
 #pragma mark Randon Numbers
 
-- (NSInteger)getRandomNumberBetween:(NSInteger)min to :(NSInteger)max
-{
+- (NSInteger)getRandomNumberBetween:(NSInteger)min to :(NSInteger)max{
     return min + arc4random() % (max - min + 1);
+}
+
+-(void)voltaMenu{
+    SKScene *scene = [[InitialMenu alloc] initWithSize: self.view.bounds.size];
+    scene.size = self.view.bounds.size;
+    scene.scaleMode = SKSceneScaleModeResizeFill;
+    [self.view presentScene:scene];
+    
+    
 }
 
 #pragma mark Alocando Sprites
 
--(NSArray *)alocandoSpriteTiro
-{
+-(NSArray *)alocandoSpriteTiro{
     NSArray *s = [NSArray arrayWithObjects:[SKTexture textureWithImageNamed:@"tiro3"],[SKTexture textureWithImageNamed:@"tiro2"],[SKTexture textureWithImageNamed:@"tiro1"], nil];
     return s;
 }
 
--(NSArray *)alocandoSpriteTironovo
-{
+-(NSArray *)alocandoSpriteTironovo{
     NSArray *s = [NSArray arrayWithObjects:[SKTexture textureWithImageNamed:@"tiro30"],[SKTexture textureWithImageNamed:@"tiro20"],[SKTexture textureWithImageNamed:@"tiro10"], nil];
     return s;
 }
@@ -399,9 +401,7 @@
     return animationSheet;
 }
 
--(void)didMoveToView:(SKView *)view
-{
-    
+-(void)didMoveToView:(SKView *)view{
 }
 
 - (BOOL)shouldAutorotate {
