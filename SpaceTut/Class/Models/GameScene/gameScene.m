@@ -152,7 +152,6 @@
 }
 
 #pragma mark Colision
-
 - (void)didBeginContact:(SKPhysicsContact *)contact{
     //NSLog(@"contact detected");
     [self.colisao check:contact.bodyA.node :contact.bodyB.node :self];
@@ -166,7 +165,6 @@
             [self gerateEnemy];
             [self.emenySpawn startTimer];
         }
-
     }
     else{
         if (self.bicho_criado == NO) {
@@ -203,7 +201,6 @@
             }
         }
     }
-    
     [self enumerateChildNodesWithName:@"explosao" usingBlock:^(SKNode *node, BOOL *stop) {
         if (![node hasActions]) {
              [node removeFromParent];
@@ -291,7 +288,6 @@
     if (self.pode && (self.spriteTut.life > 0)) {
         [self atirar];
         [self runAction:self.somTiro];
-
         self.pode = NO;
     }
     
@@ -346,28 +342,22 @@
     SKAction *remove = [SKAction removeFromParent];
     [enemy runAction:[SKAction sequence:@[planeDestroy,remove]]];
     
-    
     self.countJelly +=1;
-    
 }
 
 #pragma mark Randon Numbers
-
 - (NSInteger)getRandomNumberBetween:(NSInteger)min to :(NSInteger)max{
     return min + arc4random() % (max - min + 1);
 }
 
 -(void)voltaMenu{
-    SKScene *scene = [[InitialMenu alloc] initWithSize: self.view.bounds.size];
+    InitialMenu *scene = [[InitialMenu alloc] initWithSize:self.view.bounds.size tipo:1];
     scene.size = self.view.bounds.size;
     scene.scaleMode = SKSceneScaleModeResizeFill;
     [self.view presentScene:scene];
-    
-    
 }
 
 #pragma mark Alocando Sprites
-
 -(NSArray *)alocandoSpriteTiro{
     NSArray *s = [NSArray arrayWithObjects:[SKTexture textureWithImageNamed:@"tiro3"],[SKTexture textureWithImageNamed:@"tiro2"],[SKTexture textureWithImageNamed:@"tiro1"], nil];
     return s;
@@ -383,9 +373,9 @@
     NSMutableArray* animationSheet = [NSMutableArray array];
     SKTexture* mainTexture = [SKTexture textureWithImageNamed:name];
     
-    for(int j = numRows-1; j >= 0; j--) {
-        for(int i = 0; i < numSpritesPerRow; i++) {
-            
+    for(int j = numRows-1; j >= 0; j--){
+        for(int i = 0; i < numSpritesPerRow; i++){
+
             SKTexture* part = [SKTexture textureWithRect:CGRectMake(i*(1.0f/numSpritesPerRow), j*(1.0f/numRows), 1.0f/numSpritesPerRow, 1.0f/numRows) inTexture:mainTexture];
             
             [animationSheet addObject:part];
@@ -396,7 +386,6 @@
         
         if(animationSheet.count == numSprites)
             break;
-        
     }
     return animationSheet;
 }
@@ -411,7 +400,5 @@
 - (NSUInteger)supportedInterfaceOrientations {
     return UIInterfaceOrientationMaskLandscapeRight;
 }
-
-
 
 @end

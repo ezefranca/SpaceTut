@@ -6,8 +6,6 @@
 //  Copyright (c) 2014 Gabriel Vieira. All rights reserved.
 //
 
-
-
 #import <SpriteKit/SpriteKit.h>
 #import "Define.h"
 #import "Timer.h"

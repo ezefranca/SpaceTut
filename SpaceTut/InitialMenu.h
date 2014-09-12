@@ -1,17 +1,9 @@
-//
-//  InitialMenu.h
-//  New Momentum
-//
-//  Created by Alessandro Camillo Gimenez de Menezes on 29/05/14.
-//  Copyright (c) 2014 Alessandro Camillo Gimenez de Menezes. All rights reserved.
-//
 
 #import <SpriteKit/SpriteKit.h>
 
-@interface InitialMenu : SKScene <SKPhysicsContactDelegate>
+@interface InitialMenu : SKScene
+@property int qteApareceu;
 
-
-@property SKSpriteNode *botao;
-@property SKLabelNode *myLabel;
+-(id)initWithSize:(CGSize)size  tipo:(int)config;
 
 @end

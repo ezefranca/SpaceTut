@@ -1,45 +1,46 @@
-//
-//  InitialMenu.m
-//
-
-//
 
 #import "InitialMenu.h"
-#import "MenuScene.h"
-#import "ViewController.h"
-#import "AppDelegate.h"
 #import "gameScene.h"
-
-
 
 @implementation InitialMenu
 
 -(id)initWithSize:(CGSize)size {
     if (self = [super initWithSize:size]) {
-        self.physicsWorld.contactDelegate = self;  // makes collision detection possible
-        self.backgroundColor = [SKColor colorWithRed:0.1 green:1.0 blue:0.1 alpha:1.0];
-
-        _myLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
-        _myLabel.text = @"start!";
-        _myLabel.fontSize = 20;
-        _myLabel.position = CGPointMake(self.frame.size.width - _myLabel.frame.size.width/2,
-                                       self.frame.size.height/4 + _myLabel.frame.size.height/2 );
-        [self setBotao : [SKSpriteNode spriteNodeWithColor: [UIColor redColor]
-                                                      size: CGSizeMake(_myLabel.frame.size.width, _myLabel.frame.size.height*2 +20)]];
-        //[[self botao] setSize:myLabel.frame.size];
-        [self botao].position = _myLabel.position;
+        self.backgroundColor = [SKColor colorWithRed:0.01 green:0.01 blue:0.01 alpha:0.5];
+        SKSpriteNode *bg = [[SKSpriteNode alloc] initWithImageNamed:@"Background tela inicial.jpg"];
+        bg.position = CGPointMake(self.frame.size.height/2, self.frame.size.width/2);
         
-        [self addChild: [self botao]];
-        [self addChild: _myLabel];
-
+        [self addChild:bg];
     }
     return self;
 }
--(void)didMoveToView:(SKView *)view{
 
+
+
+-(id)initWithSize:(CGSize)size  tipo:(int)config{
+    if (self = [super initWithSize:size]) {
+        self.backgroundColor = [SKColor colorWithRed:0.01 green:0.01 blue:0.01 alpha:0.5];
+        SKSpriteNode *bg = [[SKSpriteNode alloc] initWithImageNamed:@"Background tela inicial.jpg"];
+        
+        switch (config) {
+            case 0:
+                bg.position = CGPointMake(self.frame.size.height/2, self.frame.size.width/2);
+                break;
+                
+            default:
+                bg.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);
+                break;
+        }
+        [self addChild:bg];
+        
+    }
+    return self;
 }
 
 
+-(void)didMoveToView:(SKView *)view{
+
+}
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
  //    for (UITouch *touch in touches) {
@@ -56,31 +57,17 @@
 }
 
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
-    for (UITouch *touch in touches) {
-        CGPoint location = [touch locationInNode:self];
-        if (CGRectContainsPoint([self botao].frame, location)) {
-            gameScene * stage = [[gameScene alloc] initWithSize:self.view.bounds.size];
-            stage.scaleMode = SKSceneScaleModeAspectFill;
-            [self.view presentScene:stage transition:[SKTransition doorsOpenHorizontalWithDuration:2] ];
-        }
-    }
-}
-
--(void) didBeginContact:(SKPhysicsContact *)contact{
-    SKPhysicsBody *firstBody, *secondBody;
-    
-    if (contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask) {
-        firstBody = contact.bodyA;
-        secondBody = contact.bodyB;
-    }
-    else{
-        firstBody = contact.bodyB;
-        secondBody = contact.bodyA;
-    }
+    gameScene * stage = [[gameScene alloc] initWithSize:self.view.bounds.size];
+    stage.scaleMode = SKSceneScaleModeAspectFill;
+    [self.view presentScene:stage transition:[SKTransition revealWithDirection: SKTransitionDirectionLeft duration:2]];
 }
 
 -(void)update:(CFTimeInterval)currentTime {
     /* Called before each frame is rendered */
 }
+
+
+
+
 
 @end

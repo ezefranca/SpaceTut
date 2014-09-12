@@ -20,7 +20,7 @@
     
 //    SKScene * scene = [MenuScene sceneWithSize:];
     //SKScene * scene = [gameScene sceneWithSize:self.skView.bounds.size];
-    SKScene *scene = [[InitialMenu alloc] initWithSize:self.skView.bounds.size];
+    InitialMenu *scene = [[InitialMenu alloc] initWithSize:self.skView.bounds.size tipo:0];
     scene.size = self.skView.bounds.size;
     scene.scaleMode = SKSceneScaleModeResizeFill;
     
@@ -31,7 +31,7 @@
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation{
-    return YES;
+    return NO;
 }
 
 - (NSUInteger)supportedInterfaceOrientations {

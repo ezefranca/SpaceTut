@@ -16,7 +16,6 @@
 		291CBA6919082D5D001F6D32 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 291CBA6819082D5D001F6D32 /* AppDelegate.m */; };
 		291CBA6C19082D5D001F6D32 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 291CBA6A19082D5D001F6D32 /* Main.storyboard */; };
 		291CBA6F19082D5D001F6D32 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 291CBA6E19082D5D001F6D32 /* ViewController.m */; };
-		291CBA7419082D5D001F6D32 /* Spaceship.png in Resources */ = {isa = PBXBuildFile; fileRef = 291CBA7319082D5D001F6D32 /* Spaceship.png */; };
 		291CBA7619082D5D001F6D32 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 291CBA7519082D5D001F6D32 /* Images.xcassets */; };
 		291CBA7D19082D5D001F6D32 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 291CBA7C19082D5D001F6D32 /* XCTest.framework */; };
 		291CBA7E19082D5D001F6D32 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 291CBA5619082D5D001F6D32 /* Foundation.framework */; };
@@ -68,6 +67,7 @@
 		F621A56D19C36E3400A44553 /* InitialMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = F621A56B19C36E3400A44553 /* InitialMenu.m */; };
 		F621A56F19C372C100A44553 /* space grande.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F621A56E19C372C100A44553 /* space grande.jpg */; };
 		F63A626E19C368DE0047E8B8 /* space.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F63A626D19C368DE0047E8B8 /* space.jpg */; };
+		F6F4D38F19C3911C00B29FC8 /* Background tela inicial.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F6F4D38E19C3911C00B29FC8 /* Background tela inicial.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,7 +95,6 @@
 		291CBA6B19082D5D001F6D32 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		291CBA6D19082D5D001F6D32 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		291CBA6E19082D5D001F6D32 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		291CBA7319082D5D001F6D32 /* Spaceship.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Spaceship.png; sourceTree = "<group>"; };
 		291CBA7519082D5D001F6D32 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		291CBA7B19082D5D001F6D32 /* SpaceTutTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SpaceTutTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		291CBA7C19082D5D001F6D32 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -160,6 +159,7 @@
 		F621A56C19C36E3400A44553 /* InitialMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InitialMenu.h; sourceTree = "<group>"; };
 		F621A56E19C372C100A44553 /* space grande.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "space grande.jpg"; sourceTree = "<group>"; };
 		F63A626D19C368DE0047E8B8 /* space.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = space.jpg; sourceTree = "<group>"; };
+		F6F4D38E19C3911C00B29FC8 /* Background tela inicial.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Background tela inicial.jpg"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -235,7 +235,6 @@
 				29E6219D1909AE3F002D4D29 /* MenuScene.m */,
 				291CBA9E19082DDC001F6D32 /* gameScene.h */,
 				291CBA9F19082DDC001F6D32 /* gameScene.m */,
-				291CBA7319082D5D001F6D32 /* Spaceship.png */,
 				291CBA7519082D5D001F6D32 /* Images.xcassets */,
 				291CBA9219082DDC001F6D32 /* Class */,
 				291CBA5F19082D5D001F6D32 /* Supporting Files */,
@@ -318,6 +317,7 @@
 		291CBAA819082DDC001F6D32 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				F6F4D38E19C3911C00B29FC8 /* Background tela inicial.jpg */,
 				F63A626D19C368DE0047E8B8 /* space.jpg */,
 				C032DFC719115AEA00DF19CF /* tiros2 */,
 				C032DFC51911594900DF19CF /* jelly2.png */,
@@ -486,11 +486,11 @@
 				291CBAC919082DDC001F6D32 /* newbg1.png in Resources */,
 				291CBACE19082DDC001F6D32 /* tiro2.png in Resources */,
 				291CBAC819082DDC001F6D32 /* jelly.png in Resources */,
-				291CBA7419082D5D001F6D32 /* Spaceship.png in Resources */,
 				29E621961909AADE002D4D29 /* ex2.png in Resources */,
 				291CBAD419082DDC001F6D32 /* tiro8.png in Resources */,
 				C032DFCB19115AEA00DF19CF /* tiro10.png in Resources */,
 				F63A626E19C368DE0047E8B8 /* space.jpg in Resources */,
+				F6F4D38F19C3911C00B29FC8 /* Background tela inicial.jpg in Resources */,
 				291CBAC719082DDC001F6D32 /* ex1.png in Resources */,
 				291CBA6C19082D5D001F6D32 /* Main.storyboard in Resources */,
 				291CBACD19082DDC001F6D32 /* tiro1.png in Resources */,
