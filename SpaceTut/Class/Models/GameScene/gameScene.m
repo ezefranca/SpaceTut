@@ -92,7 +92,7 @@
         
         [self gerateEnemy];
         
-        NSLog(@"%f  %f", self.size.height , self.size.width);
+        //NSLog(@"%f  %f", self.size.height , self.size.width);
         
         self.podeDescer = NO;
         self.podeSubir = NO;
