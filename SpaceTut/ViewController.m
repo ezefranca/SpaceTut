@@ -20,10 +20,9 @@
     
 //    SKScene * scene = [MenuScene sceneWithSize:];
     //SKScene * scene = [gameScene sceneWithSize:self.skView.bounds.size];
-    InitialMenu *scene = [[InitialMenu alloc] initWithSize:self.skView.bounds.size tipo:0];
-    scene.size = self.skView.bounds.size;
+    InitialMenu *scene = [[InitialMenu alloc] initWithSize:self.view.bounds.size tipo:1];
+    scene.size = self.view.bounds.size;
     scene.scaleMode = SKSceneScaleModeResizeFill;
-    
     // Present the scene.
     [self.skView presentScene:scene];
     
@@ -34,8 +33,8 @@
     return NO;
 }
 
-- (NSUInteger)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskLandscapeRight;
+-(UIInterfaceOrientationMask)supportedInterfaceOrientations {
+    return UIInterfaceOrientationMaskLandscape;
 }
 
 - (void)didReceiveMemoryWarning{

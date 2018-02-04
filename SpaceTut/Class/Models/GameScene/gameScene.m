@@ -161,7 +161,8 @@
 -(void)update:(CFTimeInterval)currentTime {
     if (self.countJelly < 30) {
         [self.emenySpawn stopTimer];
-        if ((int)[self.emenySpawn timeElapsedInSeconds] == 1) {
+        NSLog(@"%i", [self.emenySpawn timeElapsedInSeconds]);
+        if ((int)[self.emenySpawn timeElapsedInSeconds] % 10 == 1) {
             [self gerateEnemy];
             [self.emenySpawn startTimer];
         }
@@ -326,8 +327,9 @@
 #pragma mark gerando inimigos
 
 -(void)gerateEnemy{
-    Enemy *enemy = [[Enemy alloc]initWithAnimationAndPosition:self.aguaFrame ];
-     CGMutablePathRef cgpath = [RandonRote returnRote:[ self getRandomNumberBetween:1 to:5]];
+    Enemy *enemy = [[Enemy alloc]initWithAnimationAndPosition:self.aguaFrame];
+    int random = (int)[self getRandomNumberBetween:1.0 to:5.0];
+    CGMutablePathRef cgpath = [RandonRote returnRote:random];
        /*
     CGPoint s = CGPointMake(600.0, 160);
     CGPoint e = CGPointMake(0.0, 320);
